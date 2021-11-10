@@ -3,4 +3,4 @@ project(Course_project)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Course_project main.cpp Keccak.cpp Keccak.h)
+add_executable(Course_project main.cpp Keccak.cpp Keccak.h RSA.cpp RSA.h)

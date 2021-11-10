@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/bayk/Optimization methods/Course project/RSA.cpp
+cstdlib
+-
+chrono
+-
+thread
+-
+ctime
+-
+cstdint
+-
+iostream
+-
+RSA.h
+/home/bayk/Optimization methods/Course project/RSA.h
+
+/home/bayk/Optimization methods/Course project/RSA.h
+cstdio
+-
+

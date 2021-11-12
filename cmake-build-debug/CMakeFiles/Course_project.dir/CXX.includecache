@@ -17,7 +17,11 @@ ctime
 -
 cstdint
 -
+fstream
+-
 iostream
+-
+vector
 -
 RSA.h
 /home/bayk/Optimization methods/Course project/RSA.h
@@ -25,4 +29,6 @@ RSA.h
 /home/bayk/Optimization methods/Course project/RSA.h
 cstdio
 -
+string
+/home/bayk/Optimization methods/Course project/string
 

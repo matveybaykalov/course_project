@@ -6,10 +6,28 @@
 
 #IncludeRegexTransform: 
 
-/home/bayk/Optimization methods/Course project/RSA.cpp
-cstdlib
+/home/bayk/AL_labs/course_project/Bit_number.h
+bitset
 -
-chrono
+iomanip
+-
+stack
+-
+cmath
+-
+fstream
+-
+
+/home/bayk/AL_labs/course_project/Keccak.h
+string
+-
+iostream
+-
+vector
+-
+
+/home/bayk/AL_labs/course_project/RSA.cpp
+cstdlib
 -
 thread
 -
@@ -23,12 +41,40 @@ iostream
 -
 vector
 -
+future
+-
+mutex
+-
+utility
+-
+filesystem
+-
 RSA.h
-/home/bayk/Optimization methods/Course project/RSA.h
+/home/bayk/AL_labs/course_project/RSA.h
 
-/home/bayk/Optimization methods/Course project/RSA.h
+/home/bayk/AL_labs/course_project/RSA.h
 cstdio
 -
 string
-/home/bayk/Optimization methods/Course project/string
+-
+Bit_number.h
+/home/bayk/AL_labs/course_project/Bit_number.h
+
+/home/bayk/AL_labs/course_project/main.cpp
+iostream
+-
+chrono
+-
+thread
+-
+fstream
+-
+sstream
+-
+Keccak.h
+/home/bayk/AL_labs/course_project/Keccak.h
+RSA.h
+/home/bayk/AL_labs/course_project/RSA.h
+Bit_number.h
+/home/bayk/AL_labs/course_project/Bit_number.h
 

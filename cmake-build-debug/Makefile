@@ -57,10 +57,10 @@ RM = /snap/clion/169/bin/cmake/linux/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/bayk/Optimization methods/Course project"
+CMAKE_SOURCE_DIR = /home/bayk/AL_labs/course_project
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/bayk/Optimization methods/Course project/cmake-build-debug"
+CMAKE_BINARY_DIR = /home/bayk/AL_labs/course_project/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/bayk/Optimization methods/Course project/cmake-build-debug/CMakeFiles" "/home/bayk/Optimization methods/Course project/cmake-build-debug//CMakeFiles/progress.marks"
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/bayk/AL_labs/course_project/cmake-build-debug/CMakeFiles /home/bayk/AL_labs/course_project/cmake-build-debug//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/bayk/Optimization methods/Course project/cmake-build-debug/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/bayk/AL_labs/course_project/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -129,6 +129,30 @@ Course_project/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Course_project.dir/build.make CMakeFiles/Course_project.dir/build
 .PHONY : Course_project/fast
 
+Bit_number.o: Bit_number.cpp.o
+.PHONY : Bit_number.o
+
+# target to build an object file
+Bit_number.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Course_project.dir/build.make CMakeFiles/Course_project.dir/Bit_number.cpp.o
+.PHONY : Bit_number.cpp.o
+
+Bit_number.i: Bit_number.cpp.i
+.PHONY : Bit_number.i
+
+# target to preprocess a source file
+Bit_number.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Course_project.dir/build.make CMakeFiles/Course_project.dir/Bit_number.cpp.i
+.PHONY : Bit_number.cpp.i
+
+Bit_number.s: Bit_number.cpp.s
+.PHONY : Bit_number.s
+
+# target to generate assembly for a file
+Bit_number.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Course_project.dir/build.make CMakeFiles/Course_project.dir/Bit_number.cpp.s
+.PHONY : Bit_number.cpp.s
+
 Keccak.o: Keccak.cpp.o
 .PHONY : Keccak.o
 
@@ -152,6 +176,30 @@ Keccak.s: Keccak.cpp.s
 Keccak.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Course_project.dir/build.make CMakeFiles/Course_project.dir/Keccak.cpp.s
 .PHONY : Keccak.cpp.s
+
+Mytemplate.o: Mytemplate.cpp.o
+.PHONY : Mytemplate.o
+
+# target to build an object file
+Mytemplate.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Course_project.dir/build.make CMakeFiles/Course_project.dir/Mytemplate.cpp.o
+.PHONY : Mytemplate.cpp.o
+
+Mytemplate.i: Mytemplate.cpp.i
+.PHONY : Mytemplate.i
+
+# target to preprocess a source file
+Mytemplate.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Course_project.dir/build.make CMakeFiles/Course_project.dir/Mytemplate.cpp.i
+.PHONY : Mytemplate.cpp.i
+
+Mytemplate.s: Mytemplate.cpp.s
+.PHONY : Mytemplate.s
+
+# target to generate assembly for a file
+Mytemplate.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Course_project.dir/build.make CMakeFiles/Course_project.dir/Mytemplate.cpp.s
+.PHONY : Mytemplate.cpp.s
 
 RSA.o: RSA.cpp.o
 .PHONY : RSA.o
@@ -210,9 +258,15 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... Course_project"
+	@echo "... Bit_number.o"
+	@echo "... Bit_number.i"
+	@echo "... Bit_number.s"
 	@echo "... Keccak.o"
 	@echo "... Keccak.i"
 	@echo "... Keccak.s"
+	@echo "... Mytemplate.o"
+	@echo "... Mytemplate.i"
+	@echo "... Mytemplate.s"
 	@echo "... RSA.o"
 	@echo "... RSA.i"
 	@echo "... RSA.s"

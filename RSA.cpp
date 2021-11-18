@@ -3,28 +3,57 @@
 //
 
 #include <cstdlib>
-#include <chrono>
 #include <thread>
 #include <ctime>
 #include <cstdint>
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <future>
+#include <mutex>
+#include <utility>
+#include <filesystem>
 
 #include "RSA.h"
 
-RSA::RSA() {
+namespace fs = std::filesystem;
+std::mutex mtx;
+
+//RSA::RSA() {
+//    std::srand(15354);
+//    p = generate_prime_number();
+////    std::cout << "=====================================\n";
+////    std::cout << "p = " << p << '\n';
+//    q = generate_prime_number();
+//    while (q == p){
+//        q = generate_prime_number();
+//    }
+////    std::cout << "=====================================\n";
+////    std::cout << "q = " << q << '\n';
+//    n = p * q;
+////    std::cout << "n = " << n << '\n';
+//    e = generate_exponent();
+////    std::cout << "e = " << e << '\n';
+//    d = generate_secret_exponent();
+////    std::cout << "d = " << d << "\n\n";
+//}
+
+void RSA::generate(){
+    std::srand(std::time(nullptr));
     p = generate_prime_number();
     q = generate_prime_number();
+    while (q == p){
+        q = generate_prime_number();
+    }
     n = p * q;
     e = generate_exponent();
     d = generate_secret_exponent();
 }
 
-uint64_t exp_mod(uint64_t number, uint64_t degree, uint64_t module) {
-    uint64_t result = 1;
-    while (degree) {
-        if (degree & 1) {
+Bit_number<size> exp_mod(Bit_number<size> number, Bit_number<size> degree, Bit_number<size> module){
+    Bit_number<size> result = 1;
+    while (degree != 0) {
+        if (degree[0] == 1) {
             result *= number;
             result %= module;
         }
@@ -35,96 +64,215 @@ uint64_t exp_mod(uint64_t number, uint64_t degree, uint64_t module) {
     return result;
 }
 
-bool is_prime(const uint64_t& number){
-    return exp_mod(2, number - 1, number) == 1;
+std::pair<bool, Bit_number<size>> is_prime(Bit_number<size> number){
+    return {exp_mod(2, number - 1, number) == 1, number};
 }
 
-uint64_t RSA::generate_prime_number(){
-    std::srand(std::time(nullptr));
-    std::this_thread::sleep_for(std::chrono::milliseconds (1000));
-    uint64_t result = (std::rand() % 32768) + 32768;
-    while (!is_prime(result)){
-        ++result;
+int RSA::get_threads_count() const {
+    return threads_count;
+}
+
+Bit_number<size> RSA::generate_prime_number(Bit_number<size> number, const bool& is_revers) const{
+//    std::srand(std::time(nullptr));
+    Bit_number<size> result;
+//    std::this_thread::sleep_for(std::chrono::milliseconds (1000));
+    bool flag = false; // этот флаг отвечает за то, найдено ли простое число
+    if (number == 0){
+        number.get_random_quarter();
+    }
+    number._data[0] = true;
+    std::vector<std::future<std::pair<bool, Bit_number<size>>>> threads(threads_count - 1);
+    while (!flag){
+        for (int j = 1; j < threads_count; ++j) {
+//            mtx.lock();
+//            std::cout << number << '\n';
+//            mtx.unlock();
+            threads[j - 1] = std::async(is_prime, number);
+            if (is_revers)
+                number -= 2;
+            else
+                number += 2;
+        }
+//        mtx.lock();
+//        std::cout << number << '\n';
+//        mtx.unlock();
+        std::pair<bool, Bit_number<size>> temp = is_prime(number);
+        if (temp.first){
+            flag = true;
+            result = temp.second;
+        }
+        number += 2;
+        for (int j = 1; j < threads_count; ++j) {
+            temp = threads[j - 1].get();
+            if (temp.first){
+                flag = true;
+                result = temp.second;
+            }
+        }
     }
     return result;
 }
 
-uint64_t nod(uint64_t first, uint64_t second){
-    while (first != 0 && second != 0)
+Bit_number<size> nod(Bit_number<size> first, Bit_number<size> second){
+    while (first != 0 && second != 0){
         if (first > second)
             first %= second;
         else
             second %= first;
+    }
     return first + second;
 }
 
-uint64_t RSA::generate_exponent(){
-    uint64_t result = std::rand() % 32768 + 32768;
-    uint64_t second = (p - 1) * (q - 1);
-    while (!is_prime(result) && nod(result, second) != 1){
-        ++result;
+Bit_number<size> RSA::generate_exponent(){
+    Bit_number<size> result;
+    Bit_number<size> f = (p - 1) * (q - 1);
+    result = generate_prime_number(f, true);
+    while (nod(result, f) != 1){
+        result -= 2;
+        result = generate_prime_number(result, true);
     }
     return result;
 }
 
 
 //Расширенный алгоритм Евклида
-uint64_t nod_ex(uint64_t a, uint64_t b, uint64_t &x, uint64_t &y) {
+Bit_number<size> nod_ex(Bit_number<size> a, Bit_number<size> b, Bit_number<size> &x, Bit_number<size> &y) {
     if (a == 0) {
         x = 0;
         y = 1;
         return b;
     }
-    uint64_t x1, y1;
-    uint64_t d = nod_ex(b % a, a, x1, y1);
+    Bit_number<size> x1, y1;
+    Bit_number<size> d = nod_ex(b % a, a, x1, y1);
     x = y1 - (b / a) * x1;
     y = x1;
     return d;
 }
 
 //Обратное по модулю
-uint64_t inverse_modulo(uint64_t number, uint64_t module) {
-    uint64_t x, y;
+Bit_number<size> inverse_modulo(Bit_number<size> number, Bit_number<size> module) {
+    Bit_number<size> x, y;
     nod_ex(number, module, x, y);
     x = (x + module) % module;
     return x;
 }
 
-uint64_t RSA::generate_secret_exponent() {
-    uint64_t a = (p - 1) * (q - 1);
+Bit_number<size> RSA::generate_secret_exponent() {
+    Bit_number<size> a = (p - 1) * (q - 1);
     return inverse_modulo(e, a);
 }
 
-void RSA::encode(std::string &text, std::string &filename) {
-    size_t block_size = 2;
+std::string get_string_from_ciphertext(Bit_number<size>& ciphertext, RSA& object){
+    uint32_t block = (exp_mod(ciphertext, object.d, object.n)).get_32_bit_int(); //здесь надо менять при изменении количества считываемых символов
+    std::string result;
+    for (size_t j = 0; j < object.block_size; ++j) {
+        result += static_cast<char>((block << (8 * j)) >> (8 * (object.block_size - 1)));
+    }
+    return result;
+}
+
+std::string RSA::encode(std::string& text) {
+    if (e == 0 || n == 0){
+        throw std::logic_error("Empty e or n");
+    }
+    std::string result;
     size_t pad = (block_size - text.length() % block_size) % block_size; // количество символов, которые необходимо добавить в конец текста, чтобы разделить его на блоки
     for (int i = 0; i < pad; ++i) {
         text += '\x00';
     }
-    std::vector<uint16_t> text_in_numbers;
+    std::vector<uint32_t> text_in_numbers; //здесь надо менять при изменении количества считываемых символов
     for (size_t i = 0; i < static_cast<size_t>(text.length() / block_size); ++i) {
-        uint16_t block = 0;
+        uint32_t block = 0; //здесь надо менять при изменении количества считываемых символов
         for (size_t j = 0; j < block_size; ++j) {
             block <<= 8;
             block += text[i * block_size + j];
         }
         text_in_numbers.push_back(block);
     }
-    std::vector<uint64_t> ciphertext(text_in_numbers.size());
-    for (size_t i = 0; i < text_in_numbers.size(); ++i) {
-        ciphertext[i] = exp_mod(text_in_numbers[i], e, n);
-//        std::cout << ciphertext[i] << ' ';
-    }
-//    std::cout << '\n';
-    for (size_t i = 0; i < ciphertext.size(); ++i) {
-        uint16_t block = exp_mod(ciphertext[i], d, n);
-//        std::cout << block << '\n';
-        std::string str;
-        for (size_t j = 0; j < block_size; ++j) {
-            str += static_cast<char>((block << (8 * j)) >> (8 * (block_size - 1)));
+    std::vector<std::future<Bit_number<size>>> number_threads(threads_count - 1);
+    std::vector<Bit_number<size>> ciphertext(text_in_numbers.size());
+    for (int i = 0; i < std::ceil(static_cast<double> (text_in_numbers.size()) / threads_count); ++i) {
+        for (int j = 1; j < threads_count; ++j){
+            if (i * threads_count + j < text_in_numbers.size()){
+                number_threads[j - 1] = std::async(exp_mod, text_in_numbers[i * threads_count + j], e, n);
+            }
         }
-        std::cout << str;
+        ciphertext[i * threads_count] = exp_mod(text_in_numbers[i * threads_count], e, n);
+        for (int j = 1; j < threads_count; ++j){
+            if (i * threads_count + j < text_in_numbers.size()){
+                ciphertext[i * threads_count + j] = number_threads[j - 1].get();
+            }
+        }
     }
-//    std::cout << "\np = " << p << "\nq = " << q << "\nn = " << n << "\ne = " << e << "\nd = " << d << '\n';
-    std::cout << "\n" << p << ", " << q << ", " << n << ", " << e << ", " << d << '\n';
+    for (auto &x : ciphertext){
+        result += x.get_hex();
+    }
+    return result;
+
+//    std::ofstream output; // нужно попробовать без вектора ciphertext
+//    output.open(filename);
+//    for (auto &x : ciphertext){
+//        x.print_hex(output);
+//    }
+//    output.close();
+//
+//    std::ofstream secret_key;
+//    secret_key.open("secret_key.txt"); // в нормально RSA наоборот, е это секретная экспонента
+//    e.print_hex(secret_key);
+//    secret_key << ' ';
+//    n.print_hex(secret_key);
+//    secret_key.close();
+//
+//    std::ofstream public_key;
+//    public_key.open("public_key.txt");
+//    d.print_hex(public_key);
+//    public_key << ' ';
+//    n.print_hex(public_key);
+//    public_key.close();
+}
+
+std::string RSA::decode(const std::string &text) { // будем ситать, что проверка на существование файлов выполнена в интерфейсе программы
+    if (d == 0 || n == 0){
+        throw std::logic_error("Empty d or n");
+    }
+    std::string result;
+    std::vector<Bit_number<size>> ciphertext(text.length() / (size / 8));
+    for (int i = 0; i < text.length() / (size / 8); ++i) {
+        ciphertext[i].read_hex(text.substr(i * (size / 8), (size / 8)));
+    }
+    std::vector<std::future<std::string>> string_threads(threads_count - 1);
+    for (int i = 0; i < std::ceil(static_cast<double> (ciphertext.size()) / threads_count); ++i) { // расшифрование работает правильно во n потоках
+        for (int j = 1; j < threads_count; ++j) {
+            if (i * threads_count + j < ciphertext.size()){
+                string_threads[j - 1] = std::async(get_string_from_ciphertext, std::ref(ciphertext[i * threads_count + j]), std::ref(*this));
+            }
+        }
+        result = get_string_from_ciphertext(ciphertext[i * threads_count], *this);
+        for (int j = 1; j < threads_count; ++j){
+            if (i * threads_count + j < ciphertext.size()){
+                result += string_threads[j - 1].get();
+            }
+        }
+    }
+    return result;
+//    std::cout << "\n\"" << p << "\", \"" << q << "\", \"" << n << "\", \"" << e << "\", \"" << d << "\"\n";
+////    std::cout << is_prime(e).first << '\n';
+}
+
+std::pair<std::string, std::string> RSA::get_public_key() {
+    return {e.get_hex(), n.get_hex()};
+}
+
+std::pair<std::string, std::string> RSA::get_private_key() {
+    return {d.get_hex(), n.get_hex()};
+}
+
+void RSA::set_public_key(const std::string &hex_e, const std::string &hex_n) {
+    e.read_hex(hex_e);
+    n.read_hex(hex_n);
+}
+
+void RSA::set_private_key(const std::string &hex_d, const std::string &hex_n) {
+    d.read_hex(hex_d);
+    n.read_hex(hex_n);
 }

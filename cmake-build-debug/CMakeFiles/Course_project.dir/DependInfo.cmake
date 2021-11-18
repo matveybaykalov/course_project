@@ -8,9 +8,11 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/bayk/Optimization methods/Course project/Keccak.cpp" "/home/bayk/Optimization methods/Course project/cmake-build-debug/CMakeFiles/Course_project.dir/Keccak.cpp.o"
-  "/home/bayk/Optimization methods/Course project/RSA.cpp" "/home/bayk/Optimization methods/Course project/cmake-build-debug/CMakeFiles/Course_project.dir/RSA.cpp.o"
-  "/home/bayk/Optimization methods/Course project/main.cpp" "/home/bayk/Optimization methods/Course project/cmake-build-debug/CMakeFiles/Course_project.dir/main.cpp.o"
+  "/home/bayk/AL_labs/course_project/Bit_number.cpp" "/home/bayk/AL_labs/course_project/cmake-build-debug/CMakeFiles/Course_project.dir/Bit_number.cpp.o"
+  "/home/bayk/AL_labs/course_project/Keccak.cpp" "/home/bayk/AL_labs/course_project/cmake-build-debug/CMakeFiles/Course_project.dir/Keccak.cpp.o"
+  "/home/bayk/AL_labs/course_project/Mytemplate.cpp" "/home/bayk/AL_labs/course_project/cmake-build-debug/CMakeFiles/Course_project.dir/Mytemplate.cpp.o"
+  "/home/bayk/AL_labs/course_project/RSA.cpp" "/home/bayk/AL_labs/course_project/cmake-build-debug/CMakeFiles/Course_project.dir/RSA.cpp.o"
+  "/home/bayk/AL_labs/course_project/main.cpp" "/home/bayk/AL_labs/course_project/cmake-build-debug/CMakeFiles/Course_project.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

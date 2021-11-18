@@ -1,4 +1,4 @@
-# Install script for directory: /home/bayk/Optimization methods/Course project
+# Install script for directory: /home/bayk/AL_labs/course_project
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/bayk/Optimization methods/Course project/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/bayk/AL_labs/course_project/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = 
 
-CXX_FLAGS = -g -std=gnu++2a
+CXX_FLAGS = -pthread -std=c++11 -g -std=gnu++2a
 

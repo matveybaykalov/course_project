@@ -1,3 +1,0 @@
-/home/bayk/AL_labs/course_project/cmake-build-default/CMakeFiles/edit_cache.dir
-/home/bayk/AL_labs/course_project/cmake-build-default/CMakeFiles/rebuild_cache.dir
-/home/bayk/AL_labs/course_project/cmake-build-default/CMakeFiles/Course_project.dir

@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Course_project.dir/Bit_number.cpp.o"
+  "CMakeFiles/Course_project.dir/Digital_signature.cpp.o"
   "CMakeFiles/Course_project.dir/Keccak.cpp.o"
   "CMakeFiles/Course_project.dir/Mytemplate.cpp.o"
   "CMakeFiles/Course_project.dir/RSA.cpp.o"

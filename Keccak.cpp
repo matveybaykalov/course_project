@@ -4,10 +4,9 @@
 
 #include "Keccak.h"
 #include <bitset>
-#include <iostream>
 #include <cmath>
-#include <sstream>
 #include <iomanip>
+#include <iostream>
 
 std::vector<std::vector<std::string>> operator^(const std::vector<std::vector<std::string>>& lhs,
                                                 const std::vector<std::vector<std::string>>& rhs){
@@ -25,7 +24,6 @@ std::vector<std::vector<std::string>> operator^(const std::vector<std::vector<st
 
 std::string operator^(const std::string& lhs, const std::string& rhs){
     std::string result;
-    result.clear(); // Странная строчка, надо подумать... скорее всего удалить...
     for (int i = 0; i < rhs.length(); ++i) {
         result += static_cast<char>(lhs[i] ^ rhs[i]);
     }
@@ -90,7 +88,7 @@ void Keccak::squeezing() {
     } while (z.length() < c / 8);
 }
 
-Keccak::Keccak(const std::string &input) { //надо подумать, почему выводит неправильный размер хеша и сделать полную проверку на правильность выполнения
+Keccak::Keccak(const std::string &input) {
     rounds_number = count_rounds_number();
     padding(input);
     adding_blocks();
@@ -141,8 +139,7 @@ std::string Keccak::RC (const size_t& t) const{
     std::vector<bool>result(w, false);
     auto l = static_cast<size_t>(log2(static_cast<double>(w)));
     for (int i = 0; i <= l; ++i) {
-//        bool a = rc(i + 7 * t); // rc(7)=0 rc(8)=1 rc(9)=0 rc(10)=1 rc(11)=1 rc(12)=0 rc(13)=0
-        result[(1<<i)-1] = rc(i + 7 * t); // res[0]=0 res[1]=1 res[3]=0 res[7]=1 res[15]=1 res[31]=0 res[63]=0
+        result[(1<<i)-1] = rc(i + 7 * t);
     }
     return from_bool_vector_to_string(result);
 }
@@ -153,8 +150,7 @@ std::string cyclic_shift(const std::string& str, const size_t& n){ // цикли
     std::vector<bool> str_bits(length * 8, false);
     str_bits = from_string_to_bool_vector(str);
     for (int i = 0; i < length * 8; ++i) {
-//        std::cout << (str.length() * 8 - n + i) % (length * 8) << '\n';
-        result[i] = str_bits[(str.length() * 8 - n + i) % (length * 8)]; // НЕПРАВИЛЬНО пример для одного байта: 7->5, 6->4, 5->3, 4->2, 3->1, 2->0, 1->7, 0->6
+        result[i] = str_bits[(str.length() * 8 - n + i) % (length * 8)];
     }
     return from_bool_vector_to_string(result);
 }
@@ -163,7 +159,7 @@ size_t shift_size(const int& x, const int& y){
     if(x == 0 && y == 0){
         return 0;
     }
-    size_t w = 64; // надо бы брать эту величину из поля класса
+    size_t w = 64;
     int i = 1, j = 0, t = 0, j_temp;
     while (i != x || j != y){
         j_temp = j;
@@ -192,13 +188,8 @@ std::vector<std::vector<std::string>> Keccak::absorbing_round(std::vector<std::v
         C[i] = A[0][i] ^ A[1][i] ^ A[2][i] ^ A[3][i] ^ A[4][i]; // сложение по модулю 2 каждой строки матрицы
     }
     for (int i = 0; i < 5; ++i) {
-//        std::string temp = cyclic_shift("PRW", 2);
-        D[i] = C[((i - 1) + 5) % 5] ^ cyclic_shift(C[(i + 1) % 5], 1); // можно написать получше, но так понятно
+        D[i] = C[((i - 1) + 5) % 5] ^ cyclic_shift(C[(i + 1) % 5], 1);
     }
-//    for (int i = 0; i < 5; ++i) {
-//        std::cout << from_string_to_hex(D[i]) << ' ';
-//    }
-//    std::cout << '\n';
     for (int j = 0; j < 5; ++j) {
         for (int i = 0; i < 5; ++i) {
             A[i][j] = A[i][j] ^ D[j];
@@ -218,25 +209,12 @@ std::vector<std::vector<std::string>> Keccak::absorbing_round(std::vector<std::v
     }
 //    iota step
     A[0][0] = A[0][0] ^ rc_constant;
-//    for (int j = 0; j < 5; ++j) {
-//        for (int i = 0; i < 5; ++i) {
-//            std::cout << from_string_to_hex(A[i][j]) << ' ';
-//        }
-//        std::cout << '\n';
-//    }
-//    std::cout << '\n';
     return A;
 }
 
 std::vector<std::vector<std::string>> Keccak::permutation_function(std::vector<std::vector<std::string>>& str) {
-    for (size_t i = 0; i < rounds_number; ++i) { // надо учитывать, что char это знаковый тип, но считает правильно
+    for (size_t i = 0; i < rounds_number; ++i) {
         str = absorbing_round(str, RC(i));
-//        std::string temp = RC(i);
-//        std::cout << std::setw(2) << std::dec << i << ' ';
-//        for (char a : temp) { // пример для вывода полученных чисел, 256 %256 надо, чтобы получить из отрицательных положительные
-//            std::cout << std::setw(2) << std::setfill('0') << std::hex << (static_cast<int>(a) + 256) % 256;
-//        }
-//        std::cout << '\n';
     }
     return str;
 }
@@ -277,11 +255,16 @@ std::vector<std::vector<std::string>> Keccak::from_string_to_matrix(const std::s
     std::vector<std::vector<std::string>> result (5, std::vector<std::string>(5));
     for (int j = 0; j < 5; ++j) {
         for (int i = 0; i < 5; ++i) {
-            if ((5 * j + i) * w < r)
+            if ((5 * j + i) * w < r){
                 for (const char& x : str.substr((5 * j + i) * (w / 8), w / 8)){
                     result[i][j] = x + result[i][j];
                 }
 //            result[i][j] = str.substr((5 * j + i) * (w / 8), w / 8);
+            } else {
+                for (int k = 0; k < w / 8; ++k) {
+                    result[i][j] += '\x00';
+                }
+            }
         }
     }
     return result;

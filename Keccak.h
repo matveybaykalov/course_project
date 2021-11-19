@@ -5,10 +5,13 @@
 #ifndef COURSE_PROJECT_KECCAK_H
 #define COURSE_PROJECT_KECCAK_H
 
-#include <string>
 #include <iostream>
+#include <string>
 #include <vector>
 
+/*
+ * В качестве хеш-функции был выбран Keccak так как она является последним стандартом
+ */
 class Keccak {
     const size_t r = 1088, c = 512; // эти переменные необходимо будет поменять для разного формата хеша
     size_t rounds_number = 0, w = 0;
@@ -32,6 +35,9 @@ public:
     }
     void print_hash(){
         std::cout << z << '\n';
+    }
+    std::string get_hash(){
+        return z;
     }
 };
 

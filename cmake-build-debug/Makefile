@@ -153,6 +153,30 @@ Bit_number.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Course_project.dir/build.make CMakeFiles/Course_project.dir/Bit_number.cpp.s
 .PHONY : Bit_number.cpp.s
 
+Digital_signature.o: Digital_signature.cpp.o
+.PHONY : Digital_signature.o
+
+# target to build an object file
+Digital_signature.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Course_project.dir/build.make CMakeFiles/Course_project.dir/Digital_signature.cpp.o
+.PHONY : Digital_signature.cpp.o
+
+Digital_signature.i: Digital_signature.cpp.i
+.PHONY : Digital_signature.i
+
+# target to preprocess a source file
+Digital_signature.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Course_project.dir/build.make CMakeFiles/Course_project.dir/Digital_signature.cpp.i
+.PHONY : Digital_signature.cpp.i
+
+Digital_signature.s: Digital_signature.cpp.s
+.PHONY : Digital_signature.s
+
+# target to generate assembly for a file
+Digital_signature.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Course_project.dir/build.make CMakeFiles/Course_project.dir/Digital_signature.cpp.s
+.PHONY : Digital_signature.cpp.s
+
 Keccak.o: Keccak.cpp.o
 .PHONY : Keccak.o
 
@@ -261,6 +285,9 @@ help:
 	@echo "... Bit_number.o"
 	@echo "... Bit_number.i"
 	@echo "... Bit_number.s"
+	@echo "... Digital_signature.o"
+	@echo "... Digital_signature.i"
+	@echo "... Digital_signature.s"
 	@echo "... Keccak.o"
 	@echo "... Keccak.i"
 	@echo "... Keccak.s"

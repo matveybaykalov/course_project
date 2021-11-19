@@ -4,6 +4,12 @@
 CMakeFiles/Course_project.dir/Bit_number.cpp.o
  /home/bayk/AL_labs/course_project/Bit_number.cpp
  /home/bayk/AL_labs/course_project/Bit_number.h
+CMakeFiles/Course_project.dir/Digital_signature.cpp.o
+ /home/bayk/AL_labs/course_project/Bit_number.h
+ /home/bayk/AL_labs/course_project/Digital_signature.cpp
+ /home/bayk/AL_labs/course_project/Digital_signature.h
+ /home/bayk/AL_labs/course_project/Keccak.h
+ /home/bayk/AL_labs/course_project/RSA.h
 CMakeFiles/Course_project.dir/Keccak.cpp.o
  /home/bayk/AL_labs/course_project/Keccak.cpp
  /home/bayk/AL_labs/course_project/Keccak.h
@@ -16,7 +22,5 @@ CMakeFiles/Course_project.dir/RSA.cpp.o
  /home/bayk/AL_labs/course_project/RSA.cpp
  /home/bayk/AL_labs/course_project/RSA.h
 CMakeFiles/Course_project.dir/main.cpp.o
- /home/bayk/AL_labs/course_project/Bit_number.h
- /home/bayk/AL_labs/course_project/Keccak.h
- /home/bayk/AL_labs/course_project/RSA.h
+ /home/bayk/AL_labs/course_project/Digital_signature.h
  /home/bayk/AL_labs/course_project/main.cpp

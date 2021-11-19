@@ -4,6 +4,12 @@
 CMakeFiles/Course_project.dir/Bit_number.cpp.o: \
  ../Bit_number.cpp \
  ../Bit_number.h
+CMakeFiles/Course_project.dir/Digital_signature.cpp.o: \
+ ../Bit_number.h \
+ ../Digital_signature.cpp \
+ ../Digital_signature.h \
+ ../Keccak.h \
+ ../RSA.h
 CMakeFiles/Course_project.dir/Keccak.cpp.o: \
  ../Keccak.cpp \
  ../Keccak.h
@@ -16,7 +22,5 @@ CMakeFiles/Course_project.dir/RSA.cpp.o: \
  ../RSA.cpp \
  ../RSA.h
 CMakeFiles/Course_project.dir/main.cpp.o: \
- ../Bit_number.h \
- ../Keccak.h \
- ../RSA.h \
+ ../Digital_signature.h \
  ../main.cpp

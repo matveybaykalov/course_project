@@ -6,10 +6,15 @@
 #define COURSE_PROJECT_BIT_NUMBER_H
 
 #include <bitset>
-#include <iomanip>
-#include <stack>
 #include <cmath>
 #include <fstream>
+#include <iomanip>
+#include <stack>
+
+/*
+ * Так как в стандартных библиотеках с++ нет инструментов для работы с длинной арифметикой я реализовал свой класс
+ * для решения этой задачи
+ */
 
 template <const size_t size>
 class Bit_number {
@@ -25,7 +30,6 @@ public:
     std::string get_hex();
     void read_hex(const std::string& hex_number);
     bool operator[](const size_t& position);
-//    Bit_number<size>& operator=(const Bit_number<size>& other);
     Bit_number<size>& operator=(size_t number); // почему то не ссрабатывает этот оператор
     Bit_number<size> operator+(Bit_number<size>& number);
     Bit_number<size> operator+(int number);
@@ -63,6 +67,7 @@ public:
     void get_random();
     void get_random_half();
     void get_random_quarter();
+    // пришлось поместить реализация оператора вывода так как были ошибки компиляции
     friend std::ostream& operator<<(std::ostream& stream, Bit_number number){
         Bit_number<size> zero;
         Bit_number<size> base;

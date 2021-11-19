@@ -88,6 +88,12 @@
 		<Unit filename="/home/bayk/AL_labs/course_project/Bit_number.h">
 			<Option target="Course_project"/>
 		</Unit>
+		<Unit filename="/home/bayk/AL_labs/course_project/Digital_signature.cpp">
+			<Option target="Course_project"/>
+		</Unit>
+		<Unit filename="/home/bayk/AL_labs/course_project/Digital_signature.h">
+			<Option target="Course_project"/>
+		</Unit>
 		<Unit filename="/home/bayk/AL_labs/course_project/Keccak.cpp">
 			<Option target="Course_project"/>
 		</Unit>

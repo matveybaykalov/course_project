@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/bayk/AL_labs/course_project/Bit_number.cpp" "/home/bayk/AL_labs/course_project/cmake-build-debug/CMakeFiles/Course_project.dir/Bit_number.cpp.o"
+  "/home/bayk/AL_labs/course_project/Digital_signature.cpp" "/home/bayk/AL_labs/course_project/cmake-build-debug/CMakeFiles/Course_project.dir/Digital_signature.cpp.o"
   "/home/bayk/AL_labs/course_project/Keccak.cpp" "/home/bayk/AL_labs/course_project/cmake-build-debug/CMakeFiles/Course_project.dir/Keccak.cpp.o"
   "/home/bayk/AL_labs/course_project/Mytemplate.cpp" "/home/bayk/AL_labs/course_project/cmake-build-debug/CMakeFiles/Course_project.dir/Mytemplate.cpp.o"
   "/home/bayk/AL_labs/course_project/RSA.cpp" "/home/bayk/AL_labs/course_project/cmake-build-debug/CMakeFiles/Course_project.dir/RSA.cpp.o"

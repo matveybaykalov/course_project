@@ -4,12 +4,8 @@
 
 #include "Bit_number.h"
 #include <iostream>
-#include <stdexcept>
 #include <stack>
-#include <iomanip>
-#include <fstream>
-#include <algorithm>
-#include <sstream>
+#include <stdexcept>
 
 template <const size_t size>
 Bit_number<size>::Bit_number(size_t number) {
@@ -22,12 +18,6 @@ Bit_number<size>::Bit_number(size_t number) {
         ++i;
     }
 }
-
-//template <const size_t size>
-//Bit_number<size> &Bit_number<size>::operator=(const Bit_number<size> &other) {
-//    _data = other._data;
-//    return *this;
-//}
 
 template <const size_t size>
 void Bit_number<size>::print_bin() {
@@ -60,7 +50,6 @@ std::string Bit_number<size>::get_hex() {
 
 template <const size_t size>
 void set_hex_in_bits(Bit_number<size>& number, int hex, const int& position){
-//    std::cout << hex << ' ' << position << '\n';
     for (int j = 0; j < 4; ++j){
         number._data[position + j] = hex % 2;
         hex >>= 1;
@@ -73,7 +62,6 @@ void Bit_number<size>::read_hex(const std::string &hex_number) {
         _data[i] = 0;
     }
     for (int i = 0; i < size / 8; ++i) {
-//        std::cout << hex_number[hex_number.length() - 1 - i] << '\n';
         switch (hex_number[hex_number.length() - 1 - i]) {
             case '0': {
                 set_hex_in_bits(*this, 0, i * 4);
@@ -139,38 +127,12 @@ void Bit_number<size>::read_hex(const std::string &hex_number) {
                 set_hex_in_bits(*this, 15, i * 4);
                 break;
             }
+            default: {
+                throw std::invalid_argument("Unknown symbol");
+            }
         }
     }
-//    std::string number;
-//    std::stringstream ss;
-//    std::cout << hex_number << '\n';
-//    ss << std::hex << hex_number;
-//    ss >> number;
-//    std::cout << number << '\n';
-//    if (number.empty()){ // код такой же как и в конструкторе, который принимает на вход десятичное число в строковом формате
-//        throw std::logic_error("empty number");
-//    }
-//    std::string number_copy = number;
-//    std::reverse(number_copy.begin(), number_copy.end());
-//    Bit_number<size> result;
-//    Bit_number<size> billion(1000000000);
-//    for (int i = std::floor(static_cast<double>(number_copy.length()) / 9); i >= 0 ; --i) {
-//        std::string str_mob_billion = number_copy.substr(i * 9, 9);
-//        std::reverse(str_mob_billion.begin(), str_mob_billion.end());
-//        if (!str_mob_billion.empty()){
-//            int mod_billion = std::stoi(str_mob_billion);
-//            result = result * billion + mod_billion;
-//        }
-//    }
 }
-
-//std::string revers(const std::string& str){
-//    std::string result;
-//    for (size_t i = str.length() - 1; i >= 0 && i < str.length(); --i) {
-//        result += str[i];
-//    }
-//    return result;
-//}
 
 template <const size_t size>
 Bit_number<size>::Bit_number(const std::string &number) {
@@ -596,43 +558,3 @@ int Bit_number<size>::get_nearest_10_degree(size_t number) {
     }
     return counter;
 }
-
-//template <const size_t size>
-//std::ostream& operator<< (std::ostream& stream, Bit_number<size> number){
-//    Bit_number<size> zero;
-//    Bit_number<size> base;
-//    uint32_t max = (zero - 1).get_32_bit_int();
-//    int degree = number.get_nearest_10_degree(max);
-//    max = static_cast<uint32_t>(std::pow(10, degree));
-//    uint32_t billion = 1000000000;
-//    base = std::min(billion, max);
-//    degree = std::min(degree, 9);
-//    std::stack<uint32_t> stack;
-//    while (number != zero){
-//        uint32_t temp = (number % base).get_32_bit_int();
-//        stack.push(temp);
-//        number /= base;
-//    }
-//    while (!stack.empty()){
-//        stream << stack.top();
-//        stack.pop();
-//        stream << std::setw(degree) << std::setfill('0');
-//    }
-//    stream << std::setw(0);
-//    return stream;
-//}
-//    // буду выводить числа по 1 000 000 000
-//    Bit_number<size1> zero;
-//    Bit_number<size1> billion = 1000000000;
-//    std::stack<uint32_t> stack;
-//    while (number != zero){
-//        stack.push(get_32_bit_int(number % billion));
-//        number /= billion;
-//    }
-//    while (!stack.empty()){
-//        stream << stack.top();
-//        stack.pop();
-//        stream << std::setw(9) << std::setfill('0');
-//    }
-//    return stream;
-//}
